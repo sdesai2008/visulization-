@@ -1,0 +1,144 @@
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+df1 = pd.read_csv('noshowappointments.csv')
+
+# 1. Is No Show associated with Gender
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+df1 = pd.read_csv('noshowappointments.csv')
+​
+# 1. Is No Show associated with Gender
+df1.head()
+PatientId	AppointmentID	Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+0	2.987250e+13	5642903	F	2016-04-29T18:38:08Z	2016-04-29T00:00:00Z	62	JARDIM DA PENHA	0	1	0	0	0	0	No
+1	5.589978e+14	5642503	M	2016-04-29T16:08:27Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	0	0	0	0	0	0	No
+2	4.262962e+12	5642549	F	2016-04-29T16:19:04Z	2016-04-29T00:00:00Z	62	MATA DA PRAIA	0	0	0	0	0	0	No
+3	8.679512e+11	5642828	F	2016-04-29T17:29:31Z	2016-04-29T00:00:00Z	8	PONTAL DE CAMBURI	0	0	0	0	0	0	No
+4	8.841186e+12	5642494	F	2016-04-29T16:07:23Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	0	1	1	0	0	0	No
+df1.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 110527 entries, 0 to 110526
+Data columns (total 14 columns):
+ #   Column          Non-Null Count   Dtype  
+---  ------          --------------   -----  
+ 0   PatientId       110527 non-null  float64
+ 1   AppointmentID   110527 non-null  int64  
+ 2   Gender          110527 non-null  object 
+ 3   ScheduledDay    110527 non-null  object 
+ 4   AppointmentDay  110527 non-null  object 
+ 5   Age             110527 non-null  int64  
+ 6   Neighbourhood   110527 non-null  object 
+ 7   Scholarship     110527 non-null  int64  
+ 8   Hipertension    110527 non-null  int64  
+ 9   Diabetes        110527 non-null  int64  
+ 10  Alcoholism      110527 non-null  int64  
+ 11  Handcap         110527 non-null  int64  
+ 12  SMS_received    110527 non-null  int64  
+ 13  No-show         110527 non-null  object 
+dtypes: float64(1), int64(8), object(5)
+memory usage: 11.8+ MB
+df1.nunique()
+PatientId          62299
+AppointmentID     110527
+Gender                 2
+ScheduledDay      103549
+AppointmentDay        27
+Age                  104
+Neighbourhood         81
+Scholarship            2
+Hipertension           2
+Diabetes               2
+Alcoholism             2
+Handcap                5
+SMS_received           2
+No-show                2
+dtype: int64
+df1_gender = df1['No-show'].value_counts()
+df1_gender
+No     88208
+Yes    22319
+Name: No-show, dtype: int64
+df1.duplicated()
+sum(df1.duplicated())
+0
+df1.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 110527 entries, 0 to 110526
+Data columns (total 14 columns):
+ #   Column          Non-Null Count   Dtype  
+---  ------          --------------   -----  
+ 0   PatientId       110527 non-null  float64
+ 1   AppointmentID   110527 non-null  int64  
+ 2   Gender          110527 non-null  object 
+ 3   ScheduledDay    110527 non-null  object 
+ 4   AppointmentDay  110527 non-null  object 
+ 5   Age             110527 non-null  int64  
+ 6   Neighbourhood   110527 non-null  object 
+ 7   Scholarship     110527 non-null  int64  
+ 8   Hipertension    110527 non-null  int64  
+ 9   Diabetes        110527 non-null  int64  
+ 10  Alcoholism      110527 non-null  int64  
+ 11  Handcap         110527 non-null  int64  
+ 12  SMS_received    110527 non-null  int64  
+ 13  No-show         110527 non-null  object 
+dtypes: float64(1), int64(8), object(5)
+memory usage: 11.8+ MB
+df1.hist('Age')
+df1.hist('Age')
+array([[<AxesSubplot:title={'center':'Age'}>]], dtype=object)
+
+​
+df1.groupby(['Age','No-show']).mean()
+PatientId	AppointmentID	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received
+Age	No-show								
+-1	No	4.659432e+14	5.775010e+06	0.000000	0.0	0.00000	0.0	0.000000	0.000000
+0	No	1.553250e+14	5.677924e+06	0.015517	0.0	0.00000	0.0	0.000345	0.234828
+Yes	1.474478e+14	5.641653e+06	0.010955	0.0	0.00000	0.0	0.000000	0.338028
+1	No	1.602993e+14	5.688527e+06	0.037675	0.0	0.00000	0.0	0.000538	0.201830
+Yes	1.478282e+14	5.634778e+06	0.028916	0.0	0.00241	0.0	0.000000	0.460241
+...	...	...	...	...	...	...	...	...	...
+99	No	3.661577e+10	5.775674e+06	0.000000	1.0	1.00000	0.0	0.000000	0.000000
+100	No	1.891399e+13	5.721921e+06	0.000000	0.0	0.00000	0.0	0.500000	0.250000
+102	No	4.882645e+14	5.701660e+06	0.000000	0.0	0.00000	0.0	0.000000	0.000000
+115	No	3.900989e+14	5.730744e+06	0.000000	0.5	0.00000	0.0	0.500000	0.500000
+Yes	3.196321e+13	5.654456e+06	0.000000	0.0	0.00000	0.0	1.000000	0.000000
+204 rows × 8 columns
+
+df1['Age'].value_counts()
+ 0      3539
+ 1      2273
+ 52     1746
+ 49     1652
+ 53     1651
+        ... 
+ 115       5
+ 100       4
+ 102       2
+ 99        1
+-1         1
+Name: Age, Length: 104, dtype: int64
+​
+df1_new = df1.groupby(['Gender'])['No-show'].value_counts()
+df1_new
+Gender  No-show
+F       No         57246
+        Yes        14594
+M       No         30962
+        Yes         7725
+Name: No-show, dtype: int64
+df_final = df1_new/df1_new.groupby(level=0).sum()
+df_final
+Gender  No-show
+F       No         0.796854
+        Yes        0.203146
+M       No         0.800321
+        Yes        0.199679
+Name: No-show, dtype: float64
+]
+df1['Gender'].value_counts().plot(kind='bar')
+<AxesSubplot:>
